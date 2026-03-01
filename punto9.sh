@@ -4,13 +4,14 @@
 echo "Espacio en disco" 
 du -h --max-depth=1 ./ 2>/dev/null
 
-# Contar subcarpetas y archivos dentro de ellas
-echo "Conteo de archivos por carpeta"
-find . -maxdepth 1 -type d | while read -r dir; do
-    # Ignorar el directorio actual (.)
-    [ "$dir" == "." ] && continue
+# cnatidad de subcarpetas y archivos que hay dentro de las mismas
+echo "Conteo de archivos y subcarpetas"
+dir="$PWD"
+sub=$(find . -maxdepth 1 -mindepth 1 -type d | wc -l)
+echo "Carpeta: $dir | Subcarpetas: $sub"
+find . -maxdepth 1 -mindepth 1 -type d | while read -r dir; do
     archivos=$(find "$dir" -maxdepth 1 -type f | wc -l)
-    echo "Carpeta: $dir | Archivos: $archivos"
+    echo "Subcarpeta: $dir | Archivos: $archivos"
 done
 
 # Comprimir contenido de una carpeta
